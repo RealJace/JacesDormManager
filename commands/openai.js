@@ -71,8 +71,8 @@ exports.execute = async (interaction) => {
                     return interaction.createMessage(`An error has occured : ${result.data.error.message}`);
                 }
             } catch (error) {
-                console.log(error);
-                return interaction.createMessage("An error has occured");
+                console.log(error.request.res.statusMessage);
+                return interaction.createMessage(`An error has occured : ${error.request.res.statusMessage}`);
             }
         }
 	}
