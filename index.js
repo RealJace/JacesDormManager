@@ -1,10 +1,14 @@
-const fs = require("fs");
-const path = require("path");
-const fetch = require("node-fetch");
-const express = require("express");
+import fs from "fs";
+import path from "path";
+import fetch from "node-fetch";
+import express from "express";
+import Eris from "eris";
+
+import { createRequire } from "module";
+const require = createRequire(import.meta.url);
+
 const webApp = express();
 const port = 3000;
-const Eris = require("eris");
 const client = Eris(`Bot ${process.env.BOT_TOKEN}`);
 const commandModules = {};
 const guildId = "1036643905480970251"; // What guild you want the commands to be in
