@@ -4,19 +4,12 @@ const fetch = require("node-fetch");
 const express = require("express");
 const webApp = express();
 const port = 3000;
-const ReplitDatabase = require("@replit/database");
 const Eris = require("eris");
 const client = Eris(`Bot ${process.env.BOT_TOKEN}`);
-const databaseClient = new ReplitDatabase();
 const commandModules = {};
 const guildId = "1036643905480970251"; // What guild you want the commands to be in
 
 async function setupCommands() {
-
-	await databaseClient.set("data","{}");
-	let key = await databaseClient.get("data");
-	console.log(key);
-
 	console.log("Creating/Editing slash commands");
 	const fullPath = path.join(__dirname,"commands")
 	const files = fs.readdirSync(fullPath);
