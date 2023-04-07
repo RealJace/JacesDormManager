@@ -1,3 +1,5 @@
+import { createRequire } from "module";
+const require = createRequire(import.meta.url);
 const Eris = require("eris");
 const { Configuration, OpenAIApi } = require("openai");
 const configuration = new Configuration({
