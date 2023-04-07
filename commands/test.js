@@ -1,5 +1,16 @@
+const Eris = require("eris");
+
 exports.name = "test";
 exports.description = "Testing command";
-exports.execute = () => {
-	console.log("Executed")
+exports.options = [
+	{
+		type: Eris.Constants.ApplicationCommandOptionTypes.INTEGER,
+		name: "say",
+		description: "slay",
+	}
+];
+exports.execute = (interaction) => {
+	if (interaction instanceof Eris.CommandInteraction) {
+		return interaction.createMessage("hello");
+	}
 };
