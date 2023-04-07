@@ -40,34 +40,39 @@ exports.execute = async (interaction) => {
 
         // Handle text input
         if (request_type == "text") {
-            let conversationLog = [{
-                role: "system",
-                content: "You are a helpful and friendly chatbot."
-            }];
-
-            conversationLog.push({
-                role: "user",
-                content: request_input
-            });
-
-            const result = await openai.createChatCompletion({
-                model: "gpt-3.5-turbo",
-                messages: conversationLog
-            });
-
             try {
-                if (result.data.choices[0].message.length < 2000) {
-                    return interaction.createMessage(result.data.choices[0].message);
-                } else {
-                    return interaction.createMessage({
-                        file: {
-                            name: "response.txt",
-                            file: result.data.choices[0].message
-                        }
-                    });
+                let conversationLog = [{
+                    role: "system",
+                    content: "You are a helpful and friendly chatbot."
+                }];
+    
+                conversationLog.push({
+                    role: "user",
+                    content: request_input
+                });
+    
+                const result = await openai.createChatCompletion({
+                    model: "gpt-3.5-turbo",
+                    messages: conversationLog
+                });
+    
+                try {
+                    if (result.data.choices[0].message.length < 2000) {
+                        return interaction.createMessage(result.data.choices[0].message);
+                    } else {
+                        return interaction.createMessage({
+                            file: {
+                                name: "response.txt",
+                                file: result.data.choices[0].message
+                            }
+                        });
+                    }
+                } catch {
+                    return interaction.createMessage(`An error has occured : ${result.data.error.message}`);
                 }
             } catch (error) {
-                return interaction.createMessage(`An error occured : ${result.data.error.message}`);
+                console.log(error);
+                return interaction.createMessage("An error has occured");
             }
         }
 	}
