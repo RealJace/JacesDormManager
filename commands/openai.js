@@ -7,6 +7,7 @@ exports.options = [
 		type: Eris.Constants.ApplicationCommandOptionTypes.STRING,
 		name: "type",
 		description: "What type of media do you want?",
+        required: true,
         choices: [
             {
                 name: "Text",
@@ -21,7 +22,8 @@ exports.options = [
     {
 		type: Eris.Constants.ApplicationCommandOptionTypes.STRING,
 		name: "input",
-		description: "What do you want to know?"
+		description: "What do you want to know?",
+        required: true
 	}
 ];
 exports.execute = (interaction) => {
