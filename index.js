@@ -4,10 +4,16 @@ const fetch = require("node-fetch");
 const express = require("express");
 const webApp = express();
 const port = 3000;
+const ReplitDatabase = require("@replit/database");
 const Eris = require("eris");
 const client = Eris(`Bot ${process.env.BOT_TOKEN}`);
+const databaseClient = new ReplitDatabase();
 const commandModules = {};
 const guildId = "1036643905480970251"; // What guild you want the commands to be in
+
+await databaseClient.set("data","{}");
+let key = await databaseClient.get("data");
+console.log(key);
 
 async function setupCommands() {
 	console.log("Creating/Editing slash commands");
