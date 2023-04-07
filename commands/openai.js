@@ -55,7 +55,16 @@ exports.execute = async (interaction) => {
                 messages: conversationLog
             });
 
-            return interaction.createMessage(result.data.choices[0]);
+            if (result.data.choices[0].message.length < 2000) {
+                return interaction.createMessage(result.data.choices[0].message);
+            } else {
+                return interaction.createMessage({
+                    file: {
+                        name: "response.txt",
+                        file: result.data.choices[0].message
+                    }
+                });
+            }
         }
 	}
 };
