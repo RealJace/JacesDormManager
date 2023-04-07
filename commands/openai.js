@@ -55,15 +55,19 @@ exports.execute = async (interaction) => {
                 messages: conversationLog
             });
 
-            if (result.data.choices[0].message.length < 2000) {
-                return interaction.createMessage(result.data.choices[0].message);
-            } else {
-                return interaction.createMessage({
-                    file: {
-                        name: "response.txt",
-                        file: result.data.choices[0].message
-                    }
-                });
+            try {
+                if (result.data.choices[0].message.length < 2000) {
+                    return interaction.createMessage(result.data.choices[0].message);
+                } else {
+                    return interaction.createMessage({
+                        file: {
+                            name: "response.txt",
+                            file: result.data.choices[0].message
+                        }
+                    });
+                }
+            } catch (error) {
+                return interaction.createMessage(`An error occured : ${result.data.error.message}`);
             }
         }
 	}
