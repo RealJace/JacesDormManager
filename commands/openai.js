@@ -28,6 +28,7 @@ exports.options = [
 ];
 exports.execute = (interaction) => {
 	if (interaction instanceof Eris.CommandInteraction) {
-		return interaction.createMessage("hello");
+        console.log(interaction.data.options);
+		const request_type = interaction.data.options;
 	}
 };
