@@ -9,8 +9,6 @@ const client = Eris(`Bot ${process.env.BOT_TOKEN}`);
 const commandModules = {};
 const guildId = "1036643905480970251"; // What guild you want the commands to be in
 
-webApp.use("/media",express.static(path.join(__dirname,"media")))
-
 async function setupCommands() {
 	console.log("Creating/Editing slash commands");
 	const fullPath = path.join(__dirname,"commands")
