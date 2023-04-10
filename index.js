@@ -1,13 +1,13 @@
 import fs from "fs";
 import path from "path";
 import express from "express";
-import eris from "eris";
+import Eris from "eris";
 
 var __dirname = path.resolve();
 
 const webApp = express();
 const port = 3000;
-const client = new eris.Client(`Bot ${process.env.BOT_TOKEN}`);
+const client = new Eris(`Bot ${process.env.BOT_TOKEN}`);
 const commandModules = {};
 const guildId = "1036643905480970251"; // What guild you want the commands to be in
 
@@ -22,7 +22,7 @@ async function setupCommands() {
 			commandModules[path.parse(file).name] = module;
 			commands.push({
 				name: module.name,
-				type: eris.Constants.ApplicationCommandTypes.CHAT_INPUT,
+				type: Eris.Constants.ApplicationCommandTypes.CHAT_INPUT,
 				description: module.description,
 				options: module.options
 			})
@@ -42,7 +42,7 @@ client.on("ready",() => {
 });
 
 client.on("interactionCreate", interaction => {
-	if (interaction instanceof eris.CommandInteraction) {
+	if (interaction instanceof Eris.CommandInteraction) {
 		const commandModule = commandModules[interaction.data.name];
 		if (commandModule != null) {
 			return commandModule.execute(interaction);
