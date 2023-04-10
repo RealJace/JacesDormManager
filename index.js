@@ -3,22 +3,24 @@ import path from "path";
 import express from "express";
 import fetch from "node-fetch";
 import * as Eris from "eris";
+import sqlite3 from "sqlite3";
+sqlite3.verbose();
+import * as sqlite from "sqlite";
 
 import { createRequire } from "module";
 const require = createRequire(import.meta.url);
 
-const sqlite3 = require("sqlite3").verbose();
-
-const database = new sqlite3.Database("database.db",sqlite3.OPEN_READWRITE,(err)=>{
-	if (err) return console.error(err.message);
-	database.run("DROP TABLE IF EXISTS users");
-	database.run("CREATE TABLE IF NOT EXISTS users (id STRING)");
+const database = await sqlite.open({
+	filename: "database.db",
+	driver: sqlite3.Database
 });
+
+await database.exec("DROP TABLE IF EXISTS users");
+await database.exec("CREATE TABLE IF NOT EXISTS users(id STRING)");
 
 process.on("exit",() => {
-	database.close()
+	database.close();
 });
-
 
 var __dirname = path.resolve();
 
@@ -30,15 +32,21 @@ const guildId = "1036643905480970251"; // What guild you want the commands to be
 
 async function addUserIntoDb(user) {
 	if (user instanceof Eris.User) {
-		database.run("INSERT INTO users(id) VALUES (?)",[user.id],(err) => {
-			if (err) return console.error(err);
-		});
+		const user_data = await database.get("SELECT * FROM users WHERE id = ?",[user.id]);
+		console.log(user_data);
+		/*
 		database.all("SELECT * FROM users",[],(err,rows) => {
 			if (err) return console.error(err);
 			for (let row of rows) {
-				console.log(row);
+				if (row["id"] != user.author.id) {
+					database.run("INSERT INTO users(id) VALUES (?)",[user.id],(err) => {
+						if (err) return console.error(err);
+					});
+					break;
+				}
 			}
 		});
+		*/
 	}
 };
 
