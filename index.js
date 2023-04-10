@@ -18,15 +18,15 @@ async function setupCommands() {
 		console.log("Creating/Editing slash commands");
 		const commands = [];
 		for (let file of files) {
-			const module = import(path.join(fullPath,file));
+			const commandModule = await import(path.join(fullPath,file));
 			commandModules[path.parse(file).name] = module;
 			commands.push({
-				name: module.name,
-				type: Eris.Constants.ApplicationCommandTypes.CHAT_INPUT,
-				description: module.description,
-				options: module.options
+				name: commandModule.name,
+				description: commandModule.description,
+				options: commandModule.options,
+				type: Eris.Constants.ApplicationCommandTypes.CHAT_INPUT
 			})
-			console.log(`Created/Edited ${module.name}`);
+			console.log(`Created/Edited ${commandModule.name}`);
 		};
 		await client.bulkEditGuildCommands(guildId,commands)
 		console.log("Finished creating/editing slash commands")
