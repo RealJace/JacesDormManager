@@ -47,9 +47,9 @@ client.on("messageCreate",async message => {
 	const listOfWords = await listOfWordsResponse.text();
 	const curseWords = listOfWords.split("\n");
 
-	console.log(curseWords);
-
 	for (let word of curseWords) {
+		console.log(word);
+		console.log(message.content.includes(word));
 		if (message.content.includes(word)) {
 			message.delete("A curse word was found");
 			break;
