@@ -1,4 +1,4 @@
-import Eris from "eris";
+import * as Eris from "eris";
 
 export const name = "test";
 export const description = "Testing command";
