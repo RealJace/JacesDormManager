@@ -5,15 +5,15 @@ import fetch from "node-fetch";
 import * as Eris from "eris";
 import * as sqlite from "aa-sqlite";
 
+var __dirname = path.resolve();
+
 import { createRequire } from "module";
 const require = createRequire(import.meta.url);
 
-await sqlite.open("database.db")
+await sqlite.open(path.join(__dirname,"database.db"));
 
 await sqlite.run("DROP TABLE IF EXISTS users");
 await sqlite.run("CREATE TABLE IF NOT EXISTS users(id TEXT)");
-
-var __dirname = path.resolve();
 
 const webApp = express();
 const port = 3000;
