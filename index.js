@@ -19,7 +19,7 @@ async function setupCommands() {
 		const commands = [];
 		for (let file of files) {
 			const commandModule = await import(path.join(fullPath,file));
-			commandModules[path.parse(file).name] = module;
+			commandModules[path.parse(file).name] = commandModule;
 			commands.push({
 				name: commandModule.name,
 				description: commandModule.description,
