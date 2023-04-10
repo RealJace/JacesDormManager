@@ -1,15 +1,15 @@
 import Eris from "eris";
 
-exports.name = "test";
-exports.description = "Testing command";
-exports.options = [
+export const name = "test";
+export const description = "Testing command";
+export const options = [
 	{
 		type: Eris.Constants.ApplicationCommandOptionTypes.INTEGER,
 		name: "say",
 		description: "slay",
 	}
 ];
-exports.execute = (interaction) => {
+export async function execute(interaction) {
 	if (interaction instanceof Eris.CommandInteraction) {
 		return interaction.createMessage("hello");
 	}
