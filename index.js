@@ -33,7 +33,7 @@ const guildId = "1036643905480970251"; // What guild you want the commands to be
 export async function editUserDb(user) {
 	if (user instanceof Eris.User) {
 		const user_data = await database.get("SELECT * FROM users WHERE id = ?",[user.id]);
-		typeof(user_data);
+		console.log(user_data);
 		if (typeof(user_data) === undefined) {
 			await database.exec("INSERT INTO users(id) VALUES (?)",[user.id]);
 			console.log("Inserted data into a database");
@@ -41,8 +41,6 @@ export async function editUserDb(user) {
 			await database.exec("UPDATE users SET id = ?",[user.id]);
 			console.log("Updated data in a database");
 		}
-		const user_data_new = await database.get("SELECT * FROM users WHERE id = ?",[user.id]);
-		console.log(user_data_new);
 		return;
 	}
 	return console.warn("User argument is missing");
