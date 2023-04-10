@@ -1,6 +1,7 @@
 import fs from "fs";
 import path from "path";
 import express from "express";
+import fetch from "node-fetch";
 import * as Eris from "eris";
 
 var __dirname = path.resolve();
@@ -40,6 +41,20 @@ client.on("ready",() => {
 	console.log("I'm ready to serve!");
 	setupCommands();
 });
+
+client.on("messageCreate",async message => {
+	const listOfWordsResponse = await fetch("https://raw.githubusercontent.com/chucknorris-io/swear-words/master/en");
+	const listOfWords = await listOfWordsResponse.text();
+	const curseWords = listOfWords.split("\n");
+
+	for (let word of curseWords) {
+		if (message.content.includes(word)) {
+			message.delete("A curse word was found");
+			break;
+		}
+	};
+
+})
 
 client.on("interactionCreate", interaction => {
 	if (interaction instanceof Eris.CommandInteraction) {
