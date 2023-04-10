@@ -102,6 +102,10 @@ client.on("messageCreate",async message => {
 	const user_data = await getUserDb(message.author);
 	console.log(user_data);
 
+	const rows = await database.all("SELECT * FROM users");
+
+	console.log(rows);
+
 })
 
 client.on("interactionCreate", interaction => {
