@@ -4,6 +4,19 @@ import express from "express";
 import fetch from "node-fetch";
 import * as Eris from "eris";
 
+let sqlite3 = await import("sqlite3");
+sqlite3 = sqlite3.verbose();
+
+const database = new sqlite3.Database("database.db",sqlite3.OPEN_READWRITE,(err)=>{
+	if (err) return console.error(err.message);
+	database.run("CREATE TABLE IF NOT EXISTS users (id INTEGER , guild INTEGER)");
+});
+
+process.on("exit",() => {
+	database.close()
+})
+
+
 var __dirname = path.resolve();
 
 const webApp = express();
