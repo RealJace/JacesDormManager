@@ -40,6 +40,7 @@ export async function editUserDb(user) {
 		}
 		const user_data_new = await db.get("SELECT * FROM users WHERE id = ?",[user.id]);
 		console.log(user_data_new);
+		return;
 	}
 	return console.warn("User argument is missing");
 };
