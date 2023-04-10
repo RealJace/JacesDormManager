@@ -3,7 +3,11 @@ import path from "path";
 import express from "express";
 import fetch from "node-fetch";
 import * as Eris from "eris";
-import * as sqlite3 from "sqlite3";
+
+import { createRequire } from "module";
+const require = createRequire(import.meta.url);
+
+const sqlite3 = require("sqlite3").verbose();
 
 const database = new sqlite3.Database("database.db",sqlite3.OPEN_READWRITE,(err)=>{
 	if (err) return console.error(err.message);
