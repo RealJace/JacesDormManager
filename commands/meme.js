@@ -14,7 +14,7 @@ export async function execute(interaction) {
 		const raw_author_data = await fetch(`https://www.reddit.com/user/${meme_data.author}/about.json`);
 		const author_data = await raw_author_data.json();
 		
-		console.log(author_data);
+		console.log(meme_data);
 
 		return interaction.createMessage({
 			embeds: [
@@ -22,9 +22,9 @@ export async function execute(interaction) {
 					title: meme_data.title,
 					url: `https://www.reddit.com${meme_data.permalink}`,
 					image: {url: meme_data.url},
-					footer: {
-						text: meme_data.author,
-
+					author: {
+						name: meme_data.author,
+						url: author_data.icon_img
 					}
 				}
 			]
