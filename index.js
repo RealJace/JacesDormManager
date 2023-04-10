@@ -7,7 +7,7 @@ var __dirname = path.resolve();
 
 const webApp = express();
 const port = 3000;
-const client = Client(`Bot ${process.env.BOT_TOKEN}`);
+const client = Eris.Client(`Bot ${process.env.BOT_TOKEN}`);
 const commandModules = {};
 const guildId = "1036643905480970251"; // What guild you want the commands to be in
 
