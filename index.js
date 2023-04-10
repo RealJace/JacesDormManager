@@ -1,11 +1,7 @@
-import fs from "fs";
-import path from "path";
-import fetch from "node-fetch";
-import express from "express";
-import Eris from "eris";
-
-import { createRequire } from "module";
-const require = createRequire(import.meta.url);
+const fs = require("fs");
+const path = require("path");
+const express = require("express");
+const Eris = require("eris");
 
 const webApp = express();
 const port = 3000;
@@ -56,9 +52,5 @@ webApp.get("/",(request,response) => {
 webApp.listen(port,() => {
 	console.log(`Listening on port ${port}`);
 });
-
-setInterval(async () => {
-	await fetch("https://JacesDormManager.realjace.repl.co").then(console.log("Pinged."))
-},240000);
 
 client.connect();

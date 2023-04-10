@@ -1,4 +1,4 @@
-import Eris from "eris";
+const Eris = require("eris");
 
 exports.name = "test";
 exports.description = "Testing command";
