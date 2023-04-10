@@ -3,9 +3,7 @@ import path from "path";
 import express from "express";
 import fetch from "node-fetch";
 import * as Eris from "eris";
-
-let sqlite3 = await import("sqlite3");
-sqlite3 = sqlite3.verbose();
+import * as sqlite3 from "sqlite3";
 
 const database = new sqlite3.Database("database.db",sqlite3.OPEN_READWRITE,(err)=>{
 	if (err) return console.error(err.message);
