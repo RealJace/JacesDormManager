@@ -14,7 +14,7 @@ export async function execute(interaction) {
 		const raw_author_data = await fetch(`https://www.reddit.com/user/${meme_data.author}/about.json`);
 		const author_data = await raw_author_data.json();
 		
-		console.log(meme_data);
+		console.log(author_data);
 
 		return interaction.createMessage({
 			embeds: [
