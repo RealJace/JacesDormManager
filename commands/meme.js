@@ -1,5 +1,5 @@
-const Eris = require("eris");
-const fetch = require("node-fetch");
+import Eris from "eris";
+import fetch from "node-fetch";
 
 exports.name = "meme";
 exports.description = "giggles and funnies";

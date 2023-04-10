@@ -1,7 +1,7 @@
-const fs = require("fs");
-const path = require("path");
-const express = require("express");
-const Eris = require("eris");
+import fs from "fs";
+import path from "path";
+import express from "express";
+import Eris from "eris";
 
 const webApp = express();
 const port = 3000;
@@ -16,7 +16,7 @@ async function setupCommands() {
 		console.log("Creating/Editing slash commands");
 		const commands = [];
 		for (let file of files) {
-			const module = require(path.join(fullPath,file));
+			const module = import(path.join(fullPath,file));
 			commandModules[path.parse(file).name] = module;
 			commands.push({
 				name: module.name,
