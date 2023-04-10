@@ -10,7 +10,7 @@ import * as sqlite from "sqlite";
 import { createRequire } from "module";
 const require = createRequire(import.meta.url);
 
-const database = await sqlite.open({
+export const database = await sqlite.open({
 	filename: "database.db",
 	driver: sqlite3.Database
 });
@@ -30,24 +30,26 @@ const client = new Eris.Client(`Bot ${process.env.BOT_TOKEN}`);
 const commandModules = {};
 const guildId = "1036643905480970251"; // What guild you want the commands to be in
 
-async function addUserIntoDb(user) {
+export async function editUserDb(user) {
 	if (user instanceof Eris.User) {
-		const user_data = await database.get("SELECT * FROM users WHERE id = ?",[user.id]);
-		console.log(user_data);
-		/*
-		database.all("SELECT * FROM users",[],(err,rows) => {
-			if (err) return console.error(err);
-			for (let row of rows) {
-				if (row["id"] != user.author.id) {
-					database.run("INSERT INTO users(id) VALUES (?)",[user.id],(err) => {
-						if (err) return console.error(err);
-					});
-					break;
-				}
-			}
-		});
-		*/
+		const user_data = await db.get("SELECT * FROM users WHERE id = ?",[user.id]);
+		if (user_data === undefined) {
+			await db.exec("INSERT INTO users(id) VALUES (?)",[user.id]);
+		} else {
+			await db.exec("UPDATE users SET id = ?",[user.id]);
+		}
+		const user_data_new = await db.get("SELECT * FROM users WHERE id = ?",[user.id]);
+		console.log(user_data_new);
 	}
+	return console.warn("User argument is missing");
+};
+
+export async function getUserDb(user) {
+	if (user instanceof Eris.User) {
+		const user_data = await db.get("SELECT * FROM users WHERE id = ?",[user.id]);
+		return user_data;
+	}
+	return console.warn("User argument is missing");
 };
 
 async function setupCommands() {
@@ -84,7 +86,7 @@ client.on("messageCreate",async message => {
 
 	if (message.author.bot) return;
 
-	addUserIntoDb(message.author);
+	editUserDb(message.author);
 
 	const listOfWordsResponse = await fetch("https://raw.githubusercontent.com/chucknorris-io/swear-words/master/en");
 	const listOfWords = await listOfWordsResponse.text();
