@@ -11,7 +11,7 @@ const require = createRequire(import.meta.url);
 await sqlite.open("database.db")
 
 await sqlite.run("DROP TABLE IF EXISTS users");
-await sqlite.run("CREATE TABLE IF NOT EXISTS users(id STRING)");
+await sqlite.run("CREATE TABLE IF NOT EXISTS users(id TEXT)");
 
 var __dirname = path.resolve();
 
