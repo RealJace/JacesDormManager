@@ -87,10 +87,6 @@ client.on("messageCreate",async message => {
 
 	if (message.author.bot) return;
 
-	editUserDb(message.author);
-	const user_data = getUserDb(message.author);
-	console.log(user_data);
-
 	const listOfWordsResponse = await fetch("https://raw.githubusercontent.com/chucknorris-io/swear-words/master/en");
 	const listOfWords = await listOfWordsResponse.text();
 	const curseWords = listOfWords.split("\n");
@@ -101,6 +97,10 @@ client.on("messageCreate",async message => {
 			break;
 		}
 	};
+
+	await editUserDb(message.author);
+	const user_data = await getUserDb(message.author);
+	console.log(user_data);
 
 })
 
