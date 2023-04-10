@@ -7,8 +7,8 @@ export const options = [];
 export async function execute(interaction) {
 	if (interaction instanceof Eris.CommandInteraction) {
 		
-		let raw_meme_data = await fetch("https://www.reddit.com/r/memes/random/.json");
-		const meme_data = JSON.parse(raw_meme_data);
+		const raw_meme_data = await fetch("https://www.reddit.com/r/memes/random/.json");
+		const meme_data = await raw_meme_data.json()
 		
 		console.log(meme_data);
 
