@@ -24,8 +24,10 @@ async function setupCommands() {
 				description: module.description,
 				options: module.options
 			})
+			console.log(`Created/Edited ${module.name}`);
 		};
 		await client.bulkEditGuildCommands(guildId,commands)
+		console.log("Finished creating/editing slash commands")
 	} catch (error) {
 		console.log(error);
 	}
