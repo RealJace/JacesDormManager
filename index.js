@@ -11,7 +11,8 @@ const sqlite3 = require("sqlite3").verbose();
 
 const database = new sqlite3.Database("database.db",sqlite3.OPEN_READWRITE,(err)=>{
 	if (err) return console.error(err.message);
-	database.run("CREATE TABLE IF NOT EXISTS users (id INTEGER , guild INTEGER)");
+	database.run("DROP TABLE IF EXISTS users");
+	database.run("CREATE TABLE IF NOT EXISTS users (id INTEGER)");
 });
 
 process.on("exit",() => {
@@ -26,6 +27,12 @@ const port = 3000;
 const client = new Eris.Client(`Bot ${process.env.BOT_TOKEN}`);
 const commandModules = {};
 const guildId = "1036643905480970251"; // What guild you want the commands to be in
+
+async function addUserIntoDb(user) {
+	if (user instanceof Eris.User) {
+
+	}
+}
 
 async function setupCommands() {
 	const fullPath = path.join(__dirname,"commands")
