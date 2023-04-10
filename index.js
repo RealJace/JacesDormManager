@@ -3,6 +3,8 @@ import path from "path";
 import express from "express";
 import Eris from "eris";
 
+var __dirname = path.resolve();
+
 const webApp = express();
 const port = 3000;
 const client = Eris(`Bot ${process.env.BOT_TOKEN}`);
