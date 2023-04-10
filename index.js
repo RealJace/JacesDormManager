@@ -10,10 +10,10 @@ const commandModules = {};
 const guildId = "1036643905480970251"; // What guild you want the commands to be in
 
 async function setupCommands() {
-	console.log("Creating/Editing slash commands");
 	const fullPath = path.join(__dirname,"commands")
 	const files = fs.readdirSync(fullPath);
 	try {
+		console.log("Creating/Editing slash commands");
 		const commands = [];
 		for (let file of files) {
 			const module = require(path.join(fullPath,file));
@@ -29,6 +29,7 @@ async function setupCommands() {
 		await client.bulkEditGuildCommands(guildId,commands)
 		console.log("Finished creating/editing slash commands")
 	} catch (error) {
+		console.log("Failed to create/edit slash commands");
 		console.log(error);
 	}
 };
