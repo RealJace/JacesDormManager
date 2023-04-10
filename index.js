@@ -46,7 +46,8 @@ client.on("interactionCreate", interaction => {
 });
 
 webApp.get("/",(request,response) => {
-	response.send("Webserver up and running!")
+	response.send("Webserver up and running!");
+	console.log("Webserver pinged");
 });
 
 webApp.listen(port,() => {
