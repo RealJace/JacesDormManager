@@ -14,6 +14,7 @@
   "dependencies": {
     "@replit/database": "^2.0.2",
     "@types/node": "^18.0.6",
+    "aa-sqlite": "^1.0.29",
     "eris": "^0.17.2",
     "express": "^4.18.2",
     "node-fetch": "^3.2.6",

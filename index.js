@@ -3,24 +3,15 @@ import path from "path";
 import express from "express";
 import fetch from "node-fetch";
 import * as Eris from "eris";
-import sqlite3 from "sqlite3";
-sqlite3.verbose();
-import * as sqlite from "sqlite";
+import * as sqlite from "aa-sqlite";
 
 import { createRequire } from "module";
 const require = createRequire(import.meta.url);
 
-export const database = await sqlite.open({
-	filename: "database.db",
-	driver: sqlite3.Database
-});
+await sqlite.open("database.db")
 
-await database.exec("DROP TABLE IF EXISTS users");
-await database.exec("CREATE TABLE IF NOT EXISTS users(id STRING)");
-
-process.on("exit",() => {
-	database.close();
-});
+await sqlite.run("DROP TABLE IF EXISTS users");
+await sqlite.run("CREATE TABLE IF NOT EXISTS users(id STRING)");
 
 var __dirname = path.resolve();
 
@@ -32,12 +23,12 @@ const guildId = "1036643905480970251"; // What guild you want the commands to be
 
 export async function editUserDb(user) {
 	if (user instanceof Eris.User) {
-		const user_data = await database.get("SELECT * FROM users WHERE id = ?",[user.id]);
+		const user_data = await sqlite.get("SELECT * FROM users WHERE id = ?",[user.id]);
 		if (typeof(user_data) === undefined) {
-			await database.exec("INSERT INTO users(id) VALUES (?)",[user.id]);
+			await sqlite.run("INSERT INTO users(id) VALUES (?)",[user.id]);
 			console.log("Inserted data into a database");
 		} else {
-			await database.exec("UPDATE users SET id = ?",[user.id]);
+			await sqlite.run("UPDATE users SET id = ?",[user.id]);
 			console.log("Updated data in a database");
 		}
 		return;
@@ -47,7 +38,7 @@ export async function editUserDb(user) {
 
 export async function getUserDb(user) {
 	if (user instanceof Eris.User) {
-		const user_data = await database.get("SELECT * FROM users WHERE id = ?",[user.id]);
+		const user_data = await sqlite.get("SELECT * FROM users WHERE id = ?",[user.id]);
 		return user_data;
 	}
 	return console.warn("User argument is missing");
@@ -124,6 +115,10 @@ webApp.get("/",(request,response) => {
 
 webApp.listen(port,() => {
 	console.log(`Listening on port ${port}`);
+});
+
+process.on("exit",() => {
+	sqlite.close();
 });
 
 client.connect();
