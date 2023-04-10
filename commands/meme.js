@@ -11,11 +11,6 @@ export async function execute(interaction) {
 		const meme_response_data = await raw_meme_data.json();
 		const meme_data = meme_response_data[0].data.children[0].data;
 
-		const raw_author_data = await fetch(`https://www.reddit.com/user/${meme_data.author}/about.json`);
-		const author_data = await raw_author_data.json();
-		
-		console.log(author_data);
-
 		return interaction.createMessage({
 			embeds: [
 				{
@@ -24,8 +19,8 @@ export async function execute(interaction) {
 					image: {url: meme_data.url},
 					author: {
 						name: meme_data.author,
-						url: author_data.icon_img
-					}
+					},
+					color: Math.floor(Math.random()*16777215)
 				}
 			]
 		});
