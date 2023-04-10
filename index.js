@@ -22,7 +22,7 @@ async function setupCommands() {
 			commandModules[path.parse(file).name] = module;
 			commands.push({
 				name: module.name,
-				type: Eris.Constants.ApplicationCommandTypes.CHAT_INPUT,
+				//type: Eris.Constants.ApplicationCommandTypes.CHAT_INPUT,
 				description: module.description,
 				options: module.options
 			})
