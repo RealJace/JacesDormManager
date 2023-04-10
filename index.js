@@ -25,10 +25,10 @@ export async function editUserDb(user) {
 	if (user instanceof Eris.User) {
 		const user_data = await sqlite.get("SELECT * FROM users WHERE id = ?",[user.id]);
 		if (typeof(user_data) === undefined) {
-			await sqlite.run("INSERT INTO users(id) VALUES (?)",[user.id]);
+			await sqlite.push("INSERT INTO users(id) VALUES (?)",[user.id]);
 			console.log("Inserted data into a database");
 		} else {
-			await sqlite.run("UPDATE users SET id = ?",[user.id]);
+			await sqlite.push("UPDATE users SET id = ?",[user.id]);
 			console.log("Updated data in a database");
 		}
 		return;
