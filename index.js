@@ -12,12 +12,12 @@ const sqlite3 = require("sqlite3").verbose();
 const database = new sqlite3.Database("database.db",sqlite3.OPEN_READWRITE,(err)=>{
 	if (err) return console.error(err.message);
 	database.run("DROP TABLE IF EXISTS users");
-	database.run("CREATE TABLE IF NOT EXISTS users (id INTEGER)");
+	database.run("CREATE TABLE IF NOT EXISTS users (id STRING)");
 });
 
 process.on("exit",() => {
 	database.close()
-})
+});
 
 
 var __dirname = path.resolve();
@@ -30,9 +30,17 @@ const guildId = "1036643905480970251"; // What guild you want the commands to be
 
 async function addUserIntoDb(user) {
 	if (user instanceof Eris.User) {
-
+		database.run("INSERT INTO users(id) VALUES (?)",[user.id],(err) => {
+			if (err) return console.error(err);
+		});
+		database.all("SELECT * FROM users",[],(err,rows) => {
+			if (err) return console.error(err);
+			for (let row of rows) {
+				console.log(row);
+			}
+		});
 	}
-}
+};
 
 async function setupCommands() {
 	const fullPath = path.join(__dirname,"commands")
@@ -65,6 +73,11 @@ client.on("ready",() => {
 });
 
 client.on("messageCreate",async message => {
+
+	if (message.author.bot) return;
+
+	addUserIntoDb(message.author);
+
 	const listOfWordsResponse = await fetch("https://raw.githubusercontent.com/chucknorris-io/swear-words/master/en");
 	const listOfWords = await listOfWordsResponse.text();
 	const curseWords = listOfWords.split("\n");
